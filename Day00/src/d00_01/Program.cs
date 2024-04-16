@@ -1,6 +1,4 @@
-﻿using System.Dynamic;
-
-int LevensteinDistance(string a, string b)
+﻿int LevensteinDistance(string a, string b)
 {
     if (string.IsNullOrEmpty(a))
     {
@@ -131,5 +129,9 @@ string InputUserName()
 }
 
 string userName = InputUserName();
+if (string.IsNullOrEmpty(userName))
+{
+    Console.WriteLine("Your name was not found.");
+}
 string fileName = "../materials/us_names.txt";
 return Convert.ToByte(SearchUserName(fileName, userName));
