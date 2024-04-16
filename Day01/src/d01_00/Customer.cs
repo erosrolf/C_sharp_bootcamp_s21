@@ -7,6 +7,8 @@ public class Customer
     private int _itemsInCart;
     private static Random _random = new Random();
 
+    public int CountOfItemsInCart => _itemsInCart;
+
     public Customer(string name, uint id)
     {
         Name = name;
