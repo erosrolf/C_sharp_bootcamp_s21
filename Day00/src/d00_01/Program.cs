@@ -1,4 +1,6 @@
-﻿int LevensteinDistance(string a, string b)
+﻿using System.Dynamic;
+
+int LevensteinDistance(string a, string b)
 {
     if (string.IsNullOrEmpty(a))
     {
@@ -35,41 +37,99 @@
     return distances[a.Length, b.Length];
 }
 
-Console.WriteLine("Enter name:");
-string clientName = new string(Console.ReadLine());
-
-if (string.IsNullOrEmpty(clientName))
+bool FullMatchSearch(string fileWithValidNames, string userName)
 {
-    Console.WriteLine("Your name was not found.");
-    Environment.Exit(0);
+    var file = File.ReadLines(fileWithValidNames);
+    foreach (var line in file)
+    {
+        if (LevensteinDistance(line, userName) == 0)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
-var file = File.ReadLines("../materials/us_names.txt");
-bool nameIsFound = false;
-
-foreach (var line in file)
+bool MatchWithTypo(string fileWithValidNames, string userName, int typoDistance)
 {
-    if (LevensteinDistance(line, clientName) == 0)
+    var file = File.ReadLines(fileWithValidNames);
+    foreach (var line in file)
     {
-        Console.WriteLine($"Hello, {line}!");
-        Environment.Exit(0);
+        if (LevensteinDistance(line, userName) < 2)
+        {
+            if (FixTypo(line))
+            {
+                return true;
+            }
+        }
     }
-    else if (LevensteinDistance(line, clientName) < 2)
+    return false;
+}
+
+bool FixTypo(string name)
+{
+    Console.WriteLine($"Did you mean {name}? Y/N");
+    char choice = Console.ReadKey().KeyChar;
+    Console.WriteLine();
+    if (choice == 'Y')
     {
-        Console.WriteLine($"Did you mean \"{line}\"? Y/N");
-        ConsoleKeyInfo choice = Console.ReadKey();
-        if (choice.KeyChar == 'Y')
-        {
-            Console.WriteLine($"Hello, {line}!");
-            Environment.Exit(0);
-        }
-        else
-        {
-            continue;
-        }
+        Console.WriteLine($"Hello, {name}!");
+        return true;
+    }
+    else if (choice == 'N')
+    {
+        return false;
+    }
+    else
+    {
+        Console.WriteLine("Something went wrong. Check your input and retry");
+        return FixTypo(name);
+    }
+}
+
+bool UserNameValidation(string userName)
+{
+    if (userName.All(c => char.IsLetter(c) || c == ' ' || c == '-'))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool SearchUserName(string fileWithValidNames, string userName)
+{
+    if (FullMatchSearch(fileWithValidNames, userName))
+    {
+        Console.WriteLine($"Hello, {userName}!");
+        return true;
+    }
+    else if (MatchWithTypo(fileWithValidNames, userName, 1))
+    {
+        return true;
     }
     else
     {
         Console.WriteLine("Your name was not found.");
+        return false;
     }
 }
+
+string InputUserName()
+{
+    Console.WriteLine("Enter name:");
+    string userName = new string(Console.ReadLine());
+
+    if (string.IsNullOrEmpty(userName) || UserNameValidation(userName) == false)
+    {
+        Console.WriteLine("Something went wrong. Check your input and retry.");
+        userName = InputUserName();
+    }
+    return userName;
+}
+
+string userName = InputUserName();
+string fileName = "../materials/us_names.txt";
+return Convert.ToByte(SearchUserName(fileName, userName));
