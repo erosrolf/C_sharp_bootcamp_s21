@@ -1,4 +1,4 @@
-class Storage
+public class Storage
 {
     private int _capacity;
     private int _goods;
@@ -9,7 +9,7 @@ class Storage
         _goods = 0;
     }
 
-    public bool IsEmpty() => _goods == 0;
+    public bool IsEmpty => _goods == 0;
 
     public void AddGoods(int amount)
     {

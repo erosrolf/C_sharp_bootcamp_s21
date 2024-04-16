@@ -1,6 +1,6 @@
 ﻿//00
 Storage d = new(0);
-Console.WriteLine(d.IsEmpty());
+Console.WriteLine(d.IsEmpty);
 
 //01
 Customer customer1 = new Customer("Andrew", 1);

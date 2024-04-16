@@ -1,6 +1,6 @@
 using System.Reflection.Metadata.Ecma335;
 
-class Customer
+public class Customer
 {
     public string Name { get; }
     public uint Id { get; }
