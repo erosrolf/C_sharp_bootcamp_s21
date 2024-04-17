@@ -1,6 +1,7 @@
 # Directories
 **/obj/
 **/bin/
+.vscode
 .DS_Store
 
 # Prerequisites
