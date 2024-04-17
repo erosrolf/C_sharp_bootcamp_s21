@@ -48,8 +48,15 @@ public class Customer
         return !(first == second);
     }
 
-    public void FillCart(int maxCapacity)
+    public void FillCart(int maxCapacity, Storage storage)
     {
         _itemsInCart = _random.Next(1, maxCapacity + 1);
+        if (storage.CountOfGoods < _itemsInCart)
+        {
+            int drawback = _itemsInCart - storage.CountOfGoods;
+            _itemsInCart -= drawback;
+            Console.WriteLine($"{Name}, Customer #{Id} ({drawback} items left in cart)");
+        }
+        storage.RemoveGoods(_itemsInCart);
     }
 }

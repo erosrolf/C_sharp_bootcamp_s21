@@ -3,6 +3,8 @@ public class Storage
     private int _capacity;
     private int _goods;
 
+    public int CountOfGoods => _goods;
+
     public Storage(int capacity)
     {
         _capacity = capacity;

@@ -2,9 +2,19 @@ public class CashRegister
 {
     public string Name { get; }
     private Queue<Customer> _customers;
-
-
     public int CountOfCustomers => _customers.Count;
+    public int TotalCountOfGoods
+    {
+        get
+        {
+            int totalCount = 0;
+            foreach (var customer in _customers)
+            {
+                totalCount += customer.CountOfItemsInCart;
+            }
+            return totalCount;
+        }
+    }
 
     public CashRegister(string name)
     {
@@ -12,15 +22,6 @@ public class CashRegister
         _customers = new Queue<Customer>();
     }
 
-    public int TotalCountOfGoods()
-    {
-        int totalCount = 0;
-        foreach (var customer in _customers)
-        {
-            totalCount += customer.CountOfItemsInCart;
-        }
-        return totalCount;
-    }
     public void AddCustomer(Customer customer) => _customers.Enqueue(customer);
 
     public Customer ServeCustomer() => _customers.Dequeue();

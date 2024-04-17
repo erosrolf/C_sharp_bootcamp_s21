@@ -7,6 +7,6 @@ public static class CustomerExtensions
 
     public static CashRegister ChooseRegisterWithLeastGoods(this Customer customer, List<CashRegister> cashRegisters)
     {
-        return cashRegisters.OrderBy(register => register.TotalCountOfGoods()).First();
+        return cashRegisters.OrderBy(register => register.TotalCountOfGoods).First();
     }
 }
