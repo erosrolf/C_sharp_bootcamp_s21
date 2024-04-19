@@ -1,6 +1,6 @@
 public enum TaskType
 {
-    Word,
+    Work,
     Study,
     Personal
 }

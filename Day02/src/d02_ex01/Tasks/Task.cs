@@ -1,35 +1,58 @@
+using System.Runtime.CompilerServices;
+
 public class Task
 {
     public string Title { get; private set; }
-    public string Description { get; private set; }
-    public DateTime Deadline { get; private set; }
+    public string? Summary { get; private set; }
+    public DateTime? DueDate { get; private set; }
     public TaskType Type { get; private set; }
     public TaskPriority Priority { get; private set; }
     public TaskState State { get; private set; }
-    public Task(string title, string description, DateTime deadline,
-                TaskType type, TaskPriority priority)
+
+    public Task(string title, TaskType type, DateTime? dueDate = null, string? summary = null,
+                 TaskPriority priority = TaskPriority.Normal)
     {
         Title = title;
-        Description = description;
-        Deadline = deadline;
+        Summary = summary;
+        DueDate = dueDate;
         Type = type;
         Priority = priority;
         State = TaskState.New;
     }
 
-    public void MarkAsCompleted()
+    public override string ToString()
+    {
+        if (DueDate == null)
+        {
+            return $"- {Title}\n" +
+                   $"[{Type}] [{State}]\n" +
+                   $"Priority: {Priority}\n" +
+                   $"{Summary}";
+
+        }
+        return $"- {Title}\n" +
+               $"[{Type}] [{State}]\n" +
+               $"Priority: {Priority}, Due till {DueDate}\n" +
+               $"{Summary}";
+    }
+
+    public bool MarkAsCompleted()
     {
         if (State == TaskState.New)
         {
             State = TaskState.Completed;
+            return true;
         }
+        return false;
     }
 
-    public void MarkAsIrrelevant()
+    public bool MarkAsIrrelevant()
     {
         if (State == TaskState.New)
         {
             State = TaskState.Irrelevant;
+            return true;
         }
+        return false;
     }
 }
