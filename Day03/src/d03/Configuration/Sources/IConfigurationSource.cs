@@ -1,4 +1,5 @@
 public interface IConfigurationSource
 {
-    Dictionary<string, string> GetParameters();
+    int Priority { get; }
+    Dictionary<string, object> GetParameters();
 }

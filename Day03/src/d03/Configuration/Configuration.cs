@@ -1,12 +1,12 @@
 public class Configuration
 {
-    public Dictionary<string, string> Params { get; private set; }
+    public Dictionary<string, object> Params { get; private set; }
 
     public Configuration(IEnumerable<IConfigurationSource> sources)
     {
-        Params = new Dictionary<string, string>();
+        Params = new Dictionary<string, object>();
 
-        foreach (var source in sources)
+        foreach (var source in sources.OrderBy(s => s.Priority))
         {
             var parameters = source.GetParameters();
             foreach (var parameter in parameters)

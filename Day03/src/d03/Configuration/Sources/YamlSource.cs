@@ -1,19 +1,28 @@
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
-using YamlDotNet.RepresentationModel;
+using YamlDotNet.Serialization;
 
 public class YamlSource : IConfigurationSource
 {
+    public int Priority { get; }
     private readonly string _filePath;
 
-    public YamlSource(string filePath)
+    public YamlSource(string filePath, int priority)
     {
+        Priority = priority;
         _filePath = filePath;
     }
 
-    public Dictionary<string, string> GetParameters()
+    public Dictionary<string, object> GetParameters()
     {
-        var yaml = new YamlStream();
+        try
+        {
+            string yamlContent = File.ReadAllText(_filePath);
+            var yamlSerializer = new DeserializerBuilder().Build();
+            return yamlSerializer.Deserialize<Dictionary<string, object>>(yamlContent);
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Invalid data. Check your input and try again.");
+            return new Dictionary<string, object>();
+        }
     }
 }
