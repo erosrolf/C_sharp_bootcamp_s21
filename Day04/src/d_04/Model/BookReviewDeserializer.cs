@@ -13,8 +13,9 @@ public class BookReviewDeserializer
         _namingStrategy = namingStrategy;
     }
 
-    public IEnumerable<BookReview> Deserialize(string json)
+    public IEnumerable<BookReview> Deserialize(string jsonPath)
     {
+        var json = File.ReadAllText(jsonPath);
         var settings = new JsonSerializerSettings
         {
             ContractResolver = new DefaultContractResolver
@@ -22,8 +23,8 @@ public class BookReviewDeserializer
                 NamingStrategy = _namingStrategy
             }
         };
-        var root = JsonConvert.DeserializeObject<BookJsonStruct.BookReview>(json, settings);
 
+        var root = JsonConvert.DeserializeObject<BookJsonStruct.BookReview>(json, settings);
         if (root?.Results != null)
         {
             foreach (var result in root.Results)
