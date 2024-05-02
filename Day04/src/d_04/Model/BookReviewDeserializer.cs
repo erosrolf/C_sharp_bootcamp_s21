@@ -1,6 +1,3 @@
-using System.Numerics;
-using System.Runtime.CompilerServices;
-using System.Xml.XPath;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -18,10 +15,7 @@ public class BookReviewDeserializer
         var json = File.ReadAllText(jsonPath);
         var settings = new JsonSerializerSettings
         {
-            ContractResolver = new DefaultContractResolver
-            {
-                NamingStrategy = _namingStrategy
-            }
+            ContractResolver = new DefaultContractResolver { NamingStrategy = _namingStrategy }
         };
 
         var root = JsonConvert.DeserializeObject<BookJsonStruct.BookReview>(json, settings);
@@ -67,8 +61,7 @@ namespace BookJsonStruct
             public class BookDetail
             {
                 public string? Title { get; set; }
-                [JsonProperty("description")]
-                public string? SummaryShort { get; set; }
+                [JsonProperty("description")] public string? SummaryShort { get; set; }
                 public string? Author { get; set; }
             }
         }

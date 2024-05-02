@@ -3,6 +3,8 @@
 **/bin/
 .vscode
 .DS_Store
+*.user
+*.xml
 
 # Prerequisites
 *.d

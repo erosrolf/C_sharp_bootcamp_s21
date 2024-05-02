@@ -1,4 +1,4 @@
-public class BookReview
+public class BookReview : ISearchable
 {
     public string Title { get; set; } = "";
     public string Author { get; set; } = "";
