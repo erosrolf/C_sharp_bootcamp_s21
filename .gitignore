@@ -6,6 +6,7 @@
 .DS_Store
 *.user
 *.xml
+!./Team00/rush00/rush00.App
 
 # Prerequisites
 *.d
