@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rush00.App", "rush00.App\rush00.App.csproj", "{AF60357C-EE3B-49FA-96DE-62671A40AC81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rush00.Data", "rush00.Data\rush00.Data.csproj", "{1E12B4A0-BA60-4902-922D-ADB27E62655A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF60357C-EE3B-49FA-96DE-62671A40AC81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF60357C-EE3B-49FA-96DE-62671A40AC81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF60357C-EE3B-49FA-96DE-62671A40AC81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF60357C-EE3B-49FA-96DE-62671A40AC81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E12B4A0-BA60-4902-922D-ADB27E62655A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E12B4A0-BA60-4902-922D-ADB27E62655A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E12B4A0-BA60-4902-922D-ADB27E62655A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E12B4A0-BA60-4902-922D-ADB27E62655A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
