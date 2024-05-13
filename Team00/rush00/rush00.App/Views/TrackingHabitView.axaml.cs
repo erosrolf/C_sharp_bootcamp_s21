@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace rush00.App.Views;
 
-public partial class TrackingHabbitView : UserControl
+public partial class TrackingHabitView : UserControl
 {
-    public TrackingHabbitView()
+    public TrackingHabitView()
     {
         InitializeComponent();
     }

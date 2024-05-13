@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace rush00.App.Views
 {
-    public partial class NewHabbitView : UserControl
+    public partial class NewHabitView : UserControl
     {
-        public NewHabbitView()
+        public NewHabitView()
         {
             InitializeComponent();
         }

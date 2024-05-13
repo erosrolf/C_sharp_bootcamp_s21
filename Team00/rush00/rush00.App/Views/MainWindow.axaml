@@ -6,13 +6,9 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         xmlns:views="clr-namespace:rush00.App.Views"
         x:Class="rush00.App.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="Set new habit to track">
-
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
     
-    <views:NewHabbitView/>
-
+    <views:TrackingHabitView DataContext="{Binding HabitCheckList}" />
 </Window>

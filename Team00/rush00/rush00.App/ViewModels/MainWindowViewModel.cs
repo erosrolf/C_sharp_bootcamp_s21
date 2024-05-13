@@ -1,8 +1,15 @@
-﻿namespace rush00.App.ViewModels;
+﻿using rush00.App.Services;
 
-public class MainWindowViewModel : ViewModelBase
+namespace rush00.App.ViewModels
 {
-#pragma warning disable CA1822 // Mark members as static
-    public string Greeting => "Welcome to Avalonia!";
-#pragma warning restore CA1822 // Mark members as static
+    public class MainWindowViewModel : ViewModelBase
+    {
+        public HabitCheckListViewModel HabitCheckList { get; }
+        
+        public MainWindowViewModel()
+        {
+            var service = new HabitCheckListService();
+            HabitCheckList = new HabitCheckListViewModel(service.GetItems());
+        }
+    }
 }
