@@ -2,38 +2,44 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:rush00.App.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="rush00.App.Views.NewHabitView">
+             x:Class="rush00.App.Views.NewHabitView"
+             x:DataType="vm:NewHabitViewModel">
     <StackPanel>
         
         <StackPanel Margin="10, 5">
             <TextBlock Margin="0, 5"
                        Text="Set a habit to track:" />
-            <TextBox AcceptsReturn="True" />
+            <TextBox AcceptsReturn="True"
+                     Text="{Binding Title}" />
         </StackPanel>
         
         <StackPanel Margin="10, 5">
             <TextBlock Margin="0, 5"
                        Text="What would be a motivation:" />
-            <TextBox AcceptsReturn="True" />
+            <TextBox AcceptsReturn="True"
+                     Text="{Binding Motivation}"/>
         </StackPanel>
         
         <StackPanel Margin="10, 5">
             <TextBlock Margin="0, 5"
                        Text="When will you start:" />
-            <DatePicker />
+            <DatePicker SelectedDate="{Binding StartDate}" />
         </StackPanel>
         
         <StackPanel Margin="10, 5">
             <TextBlock Margin="0, 5"
                        Text="How many days you want to challenge yourself for:" />
-            <NumericUpDown Value="0"
+            <NumericUpDown Value="{Binding ChallengeDays}"
                            Minimum="0"
                            Maximum="100"
                            FormatString="0" />
         </StackPanel>
         
-        <Button Margin="10, 15" Content="Let's start!" />
+        <Button Margin="10, 15"
+                Content="Let's start!"
+                Command="{Binding StartCommand}"/>
         
     </StackPanel>
 </UserControl>

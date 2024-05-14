@@ -17,7 +17,7 @@
                             CornerRadius="5">
                         <CheckBox Margin="4"
                                   IsChecked="{Binding IsChecked}"
-                                  Content="{Binding Date}" />
+                                  Content="{Binding Date, Converter={StaticResource DateTimeToStringConverter}}" />
                     </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

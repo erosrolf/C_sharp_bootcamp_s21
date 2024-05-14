@@ -7,11 +7,12 @@ namespace rush00.App.ViewModels
 {
     public class NewHabitViewModel : ViewModelBase
     {
-        private Habit _newHabit = new Habit();
-        private string _title;
-        private string _motivation;
-        private DateTime _startDate;
+        private string _title = String.Empty;
+        private string _motivation = String.Empty;
+        private DateTimeOffset? _startDate = DateTimeOffset.Now;
         private int _challengeDays;
+        
+        public ReactiveCommand<Unit, Habit> StartCommand{ get; }
 
         public string Title
         {
@@ -25,7 +26,7 @@ namespace rush00.App.ViewModels
             set => this.RaiseAndSetIfChanged(ref _motivation, value);
         }
 
-        public DateTime StartDate
+        public DateTimeOffset? StartDate
         {
             get => _startDate;
             set => this.RaiseAndSetIfChanged(ref _startDate, value);
@@ -37,8 +38,6 @@ namespace rush00.App.ViewModels
             set => this.RaiseAndSetIfChanged(ref _challengeDays, value);
         }
 
-        public ReactiveCommand<Unit, Habit> StartCommand{ get; }
-
         public NewHabitViewModel()
         {
             var canStart = this.WhenAnyValue(
@@ -49,8 +48,11 @@ namespace rush00.App.ViewModels
                 (title, motivation, startDate, challengeDays) => 
                     !string.IsNullOrWhiteSpace(title) &&
                     !string.IsNullOrWhiteSpace(motivation) &&
-                    startDate >= DateTime.Now && 
+                    startDate != null &&
+                    startDate >= DateTimeOffset.Now.Date && 
                     challengeDays > 0);
+            
+            StartCommand = ReactiveCommand.Create(StartHabit, canStart);
         }
 
         private Habit StartHabit()
@@ -65,4 +67,3 @@ namespace rush00.App.ViewModels
         }
     }
 }
-    
