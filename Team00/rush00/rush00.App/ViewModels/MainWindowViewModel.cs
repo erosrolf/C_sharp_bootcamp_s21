@@ -12,21 +12,21 @@ namespace rush00.App.ViewModels
         
         public MainWindowViewModel()
         {
-            var service = new HabitCheckListService();
             NewHabitView = new NewHabitViewModel();
+            NewHabitView.HabitCreated += OnHabitCreated;
             _contentViewModel = NewHabitView;
+        }
+
+        private void OnHabitCreated(Habit habit)
+        {
+            var service = new HabitCheckListService();
+            ContentViewModel = new HabitCheckListViewModel(service.GetItems(habit));
         }
 
         public ViewModelBase ContentViewModel
         {
             get => _contentViewModel;
             set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
-        }
-
-        public void ShowTracking()
-        {
-            var service = new HabitCheckListService();
-            ContentViewModel = new HabitCheckListViewModel(service.GetItems(new Habit()));
         }
     }
 }

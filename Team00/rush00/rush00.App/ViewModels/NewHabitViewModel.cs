@@ -13,6 +13,7 @@ namespace rush00.App.ViewModels
         private int _challengeDays;
         
         public ReactiveCommand<Unit, Habit> StartCommand{ get; }
+        public event Action<Habit> HabitCreated;
 
         public string Title
         {
@@ -57,13 +58,15 @@ namespace rush00.App.ViewModels
 
         private Habit StartHabit()
         {
-            return new Habit
+            var habit = new Habit
             {
                 Title = Title,
                 Motivation = Motivation,
                 StartDate = StartDate,
                 ChallangeDays = ChallengeDays
             };
+            HabitCreated?.Invoke(habit);
+            return habit;
         }
     }
 }
