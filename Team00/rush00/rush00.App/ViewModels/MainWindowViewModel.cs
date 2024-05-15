@@ -1,32 +1,83 @@
-﻿using ReactiveUI;
+﻿using System.ComponentModel;
+using System.Linq;
+using ReactiveUI;
 using rush00.App.DataModel;
-using rush00.App.Services;
 
 namespace rush00.App.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
         private ViewModelBase _contentViewModel;
-        public HabitCheckListViewModel? HabitCheckList { get; }
-        public NewHabitViewModel NewHabitView { get;  }
-        
-        public MainWindowViewModel()
-        {
-            NewHabitView = new NewHabitViewModel();
-            NewHabitView.HabitCreated += OnHabitCreated;
-            _contentViewModel = NewHabitView;
-        }
-
-        private void OnHabitCreated(Habit habit)
-        {
-            var service = new HabitCheckListService();
-            ContentViewModel = new HabitCheckListViewModel(service.GetItems(habit));
-        }
+        private Habit? _habit;
 
         public ViewModelBase ContentViewModel
         {
             get => _contentViewModel;
             set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
         }
+
+        public Habit? Habit
+        {
+            get => _habit;
+            set
+            {
+                if (_habit != value)
+                {
+                    _habit?.ChallangeDays?.ToList().ForEach(hc => hc.PropertyChanged -= HabitCheckOnPropertyChanged);
+                    this.RaiseAndSetIfChanged(ref _habit, value);
+                    _habit?.ChallangeDays?.ToList().ForEach(hc => hc.PropertyChanged += HabitCheckOnPropertyChanged);
+                    UpdateContentViewModel();
+                }
+            }
+        }
+
+        public MainWindowViewModel()
+        {
+            // HabitInitiallyLoader(); // TODO load habit from DB
+            UpdateContentViewModel();
+        }
+
+        private void HabitCheckOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(HabitCheck.IsChecked) && _habit != null && _habit.IsFinished)
+            {
+                LoadNewHabitCreator(); // Вызов метода для загрузки NewHabitViewModel.
+            }
+        }
+
+        private void LoadNewHabitCreator()
+        {
+            var newHabitViewModel = new NewHabitViewModel();
+            newHabitViewModel.HabitCreated += OnHabitCreated;
+            ContentViewModel = newHabitViewModel;
+        }
+
+        private void OnHabitCreated(Habit habit)
+        {
+            Habit = habit;
+            UpdateContentViewModel();
+        }
+
+        private void UpdateContentViewModel()
+        {
+            // Если текущий ContentViewModel - это NewHabitViewModel, отпишемся от события
+            if (ContentViewModel is NewHabitViewModel oldHabitViewModel)
+            {
+                oldHabitViewModel.HabitCreated -= OnHabitCreated;
+            }
+
+            if (Habit == null || Habit.IsFinished)
+            {
+                // Создаем новый экземпляр NewHabitViewModel и подписываемся на его событие
+                var newHabitViewModel = new NewHabitViewModel();
+                newHabitViewModel.HabitCreated += OnHabitCreated;
+                ContentViewModel = newHabitViewModel;
+            }
+            else
+            {
+                ContentViewModel = new HabitCheckListViewModel(Habit);
+            }
+        }
+
     }
 }
