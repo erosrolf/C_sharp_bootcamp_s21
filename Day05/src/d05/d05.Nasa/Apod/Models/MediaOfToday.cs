@@ -18,7 +18,7 @@ namespace d05.Nasa.Apod.Models
             {
                 sb.Append($" by {Copyright}\n");
             }
-            sb.Append($"\n{Explanation}\n{Url}\n");
+            sb.Append($"{Explanation}\n{Url}\n");
             return sb.ToString();
         }
     }

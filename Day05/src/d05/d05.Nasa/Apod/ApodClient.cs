@@ -1,5 +1,5 @@
-using System.Net.Http.Json;
 using d05.Nasa.Apod.Models;
+using Newtonsoft.Json;
 
 namespace d05.Nasa.Apod
 {
@@ -22,7 +22,7 @@ namespace d05.Nasa.Apod
 
             if (response.IsSuccessStatusCode)
             {
-                var content = await response.Content.ReadFromJsonAsync<MediaOfToday[]>().ConfigureAwait(false);
+                var content = JsonConvert.DeserializeObject<MediaOfToday[]>(await response.Content.ReadAsStringAsync());
                 return content ?? Array.Empty<MediaOfToday>();
             }
             else

@@ -7,6 +7,7 @@ if (args is ["apod", _] && int.TryParse(args[1], out int count))
     var jsonObj = JObject.Parse(json);
 
     string apiKey = (string?)jsonObj["ApiKey"] ?? throw new Exception("ApiKey not found");
+    // string apiKey = "DEMO_KEY";
     
     var apodClient = new ApodClient(apiKey);
     var result = await apodClient.GetAsync(count);
