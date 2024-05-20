@@ -1,43 +1,30 @@
 ﻿using System;
-using System.Linq;
+using System.IO;
+using Newtonsoft.Json.Linq;
 using d06.Extensions;
 using d06.Models;
 
-namespace d06
+const int registerCount = 3;
+const int storageCapacity = 50;
+const int cartCapacity = 7;
+const int customerCount = 10;
+
+var json = File.ReadAllText("appsettings.json");
+var jsonObj = JObject.Parse(json);
+
+float timePerCustomer = (float?)jsonObj["TimePerCustomer"] ?? throw new Exception("CustomerSwitchTime not found");
+float timePerItem = (float?)jsonObj["TimePerItem"] ?? throw new Exception("ProductScanDuration not found");
+timePerItem = Math.Max(timePerItem, 1);
+timePerCustomer = Math.Max(timePerCustomer, 1);
+
+
+
+var shop = new Store(registerCount,
+     storageCapacity, timePerCustomer, timePerItem);
+await shop.SimulationAsync(customerCount, cartCapacity, CustomerExtensions.GetInLineByPeople);
+// await shop.SimulationAsync(customerCount, cartCapacity, CustomerExtensions.GetInLineByPeople);
+
+foreach (var register in shop.Registers)
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            const int registerCount = 3;
-            const int storageCapacity = 40;
-            const int cartCapacity = 7;
-            const int customerCount = 10;
-
-            var customers = Enumerable.Range(1, customerCount)
-                .Select(x => new Customer(x))
-                .ToArray();
-            
-            var shop = new Store(registerCount,
-                storageCapacity, 4, 1);
-            
-            Console.WriteLine("Lines by people count:");
-
-            var i = 0;
-            while (shop.IsOpen && i < customerCount)
-            {
-                var customer = customers[i++];
-                
-                customer.FillCart(cartCapacity);
-
-                if (customer.ItemsInCart <= shop.Storage.ItemsInStorage)
-                    shop.Storage.ItemsInStorage -= customer.ItemsInCart;
-                else
-                    shop.Storage.ItemsInStorage = 0;
-                
-                var register = customer.GetInLineByPeople(shop.Registers);
-                Console.WriteLine($"{customer} to {register}");
-            }
-        }
-    }
+     Console.WriteLine($"{register}. Average time for service customer = {register.TotalBusyTime / register.servedCustomersCount}");
 }
