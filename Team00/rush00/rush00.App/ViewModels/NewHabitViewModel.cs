@@ -2,7 +2,6 @@ using System;
 using System.Reactive;
 using rush00.App.DataModel;
 using ReactiveUI;
-using rush00.App.Services;
 
 namespace rush00.App.ViewModels
 {
@@ -11,7 +10,7 @@ namespace rush00.App.ViewModels
         private string _title = String.Empty;
         private string _motivation = String.Empty;
         private DateTimeOffset? _startDate = DateTimeOffset.Now;
-        private int _challengeDays;
+        private decimal? _challengeDays;
 
         public event Action<Habit>? HabitCreated;
         public ReactiveCommand<Unit, Unit> StartCommand{ get; }
@@ -34,9 +33,9 @@ namespace rush00.App.ViewModels
             set => this.RaiseAndSetIfChanged(ref _startDate, value);
         }
 
-        public int ChallengeDays
+        public decimal? ChallengeDays
         {
-            get => _challengeDays;
+            get => _challengeDays == null ? 0 : decimal.ToInt32(_challengeDays.Value);
             set => this.RaiseAndSetIfChanged(ref _challengeDays, value);
         }
 
@@ -65,8 +64,7 @@ namespace rush00.App.ViewModels
 
         private Habit StartHabit()
         {
-            var service = new HabitCheckListService();
-            var habit = new Habit(Title, Motivation, StartDate, ChallengeDays);
+            var habit = new Habit(Title, Motivation, StartDate, Convert.ToInt32(ChallengeDays));
             return habit;
         }
     }

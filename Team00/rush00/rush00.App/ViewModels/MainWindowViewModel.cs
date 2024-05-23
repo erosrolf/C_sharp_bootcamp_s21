@@ -41,7 +41,9 @@ namespace rush00.App.ViewModels
         {
             if (e.PropertyName == nameof(HabitCheck.IsChecked) && _habit != null && _habit.IsFinished)
             {
-                LoadNewHabitCreator(); // Вызов метода для загрузки NewHabitViewModel.
+                var congratulationsViewModel = new CongratulationsViewModel(_habit);
+                congratulationsViewModel.ScreenPressed += LoadNewHabitCreator;
+                ContentViewModel = congratulationsViewModel;
             }
         }
 
@@ -60,7 +62,11 @@ namespace rush00.App.ViewModels
 
         private void UpdateContentViewModel()
         {
-            // Если текущий ContentViewModel - это NewHabitViewModel, отпишемся от события
+            if (ContentViewModel is CongratulationsViewModel oldCongratulationsViewModel)
+            {
+                oldCongratulationsViewModel.ScreenPressed -= LoadNewHabitCreator;
+            }
+            
             if (ContentViewModel is NewHabitViewModel oldHabitViewModel)
             {
                 oldHabitViewModel.HabitCreated -= OnHabitCreated;
@@ -68,7 +74,6 @@ namespace rush00.App.ViewModels
 
             if (Habit == null || Habit.IsFinished)
             {
-                // Создаем новый экземпляр NewHabitViewModel и подписываемся на его событие
                 var newHabitViewModel = new NewHabitViewModel();
                 newHabitViewModel.HabitCreated += OnHabitCreated;
                 ContentViewModel = newHabitViewModel;

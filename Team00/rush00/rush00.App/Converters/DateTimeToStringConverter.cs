@@ -10,12 +10,15 @@ namespace rush00.App.Converters
         {
             if (value is DateTime dateTime)
             {
-                return dateTime.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                return dateTime.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+            }
+            else if (value is DateTimeOffset dateTimeOffset)
+            {
+                return dateTimeOffset.Date.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
             }
 
             return value;
         }
-
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is string dateString)

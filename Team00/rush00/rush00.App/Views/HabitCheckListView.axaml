@@ -6,13 +6,13 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="rush00.App.Views.HabitCheckListView"
              x:DataType="vm:HabitCheckListViewModel">
-    <StackPanel>
+        <ScrollViewer>
         <ItemsControl ItemsSource="{Binding ListItems}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="Black"
                             BorderThickness="1"
-                            Margin="4"
+                            Margin="6, 4, 20, 0"
                             Padding="4"
                             CornerRadius="5">
                         <CheckBox Margin="4"
@@ -22,5 +22,5 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-    </StackPanel>
+            </ScrollViewer>
 </UserControl>
