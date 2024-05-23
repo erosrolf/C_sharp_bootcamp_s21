@@ -1,10 +1,12 @@
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 
 namespace rush00.Data.DataModel
 {
     public class HabitCheck : INotifyPropertyChanged
     {
+        [Key]
         public int Id { get; set; }
 
         private bool _isChecked;

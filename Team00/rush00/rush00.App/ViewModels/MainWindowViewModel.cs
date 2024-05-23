@@ -1,16 +1,19 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using ReactiveUI;
-using rush00.App.DataModel;
+using rush00.Data.DataModel;
+using rush00.Data;
 
 namespace rush00.App.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private ViewModelBase _contentViewModel;
+        private readonly DAOHabitRepository? _db;  
+        private ViewModelBase? _contentViewModel;
         private Habit? _habit;
 
-        public ViewModelBase ContentViewModel
+        public ViewModelBase? ContentViewModel
         {
             get => _contentViewModel;
             set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
@@ -33,14 +36,18 @@ namespace rush00.App.ViewModels
 
         public MainWindowViewModel()
         {
-            // HabitInitiallyLoader(); // TODO load habit from DB
+            _db =  new HabitRepository(new HabitDbContext());
+            Habit = _db.GetActual();
             UpdateContentViewModel();
         }
 
         private void HabitCheckOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
+            Console.WriteLine("HabitCheckOnPropertyChanged");
+            _db?.UpdateHabit(_habit);
             if (e.PropertyName == nameof(HabitCheck.IsChecked) && _habit != null && _habit.IsFinished)
             {
+                Console.WriteLine("Habit IsFinished");
                 var congratulationsViewModel = new CongratulationsViewModel(_habit);
                 congratulationsViewModel.ScreenPressed += LoadNewHabitCreator;
                 ContentViewModel = congratulationsViewModel;
@@ -57,6 +64,7 @@ namespace rush00.App.ViewModels
         private void OnHabitCreated(Habit habit)
         {
             Habit = habit;
+            _db?.AddHabit(habit);
             UpdateContentViewModel();
         }
 
@@ -72,7 +80,7 @@ namespace rush00.App.ViewModels
                 oldHabitViewModel.HabitCreated -= OnHabitCreated;
             }
 
-            if (Habit == null || Habit.IsFinished)
+            if (Habit == null)
             {
                 var newHabitViewModel = new NewHabitViewModel();
                 newHabitViewModel.HabitCreated += OnHabitCreated;

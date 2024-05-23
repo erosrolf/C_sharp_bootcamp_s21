@@ -1,6 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
-using rush00.App.DataModel;
+using rush00.Data.DataModel;
 
 namespace rush00.App.ViewModels
 {

@@ -9,7 +9,7 @@ public class HabitDbContext : DbContext
     public DbSet<HabitCheck> HabitChecks => Set<HabitCheck>();
     public HabitDbContext()
     {
-        //Database.EnsureDeleted();
+        // Database.EnsureDeleted();
         Database.EnsureCreated();
 
     }

@@ -1,6 +1,6 @@
 using System;
 using System.Reactive;
-using rush00.App.DataModel;
+using rush00.Data.DataModel;
 using ReactiveUI;
 
 namespace rush00.App.ViewModels

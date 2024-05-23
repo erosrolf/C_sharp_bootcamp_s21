@@ -4,14 +4,14 @@ namespace rush00.Data
 {
     public interface DAOHabitRepository
     {
-        public Habit? getActual();
+        public Habit? GetActual();
 
-        public void addHabit(Habit habit);
+        public void AddHabit(Habit habit);
 
-        public void removeHabit(Habit habit);
+        public void RemoveHabit(Habit habit);
 
-        public List<Habit>? getAllHabit();
+        public List<Habit>? GetAllHabit();
 
-        public void updateHabit(Habit habit);
+        public void UpdateHabit(Habit habit);
     }
 }
