@@ -59,4 +59,20 @@ public class ElementsTests
         // Assert
         Assert.Equal(expected, actual);
     }
+
+    [Fact]
+    public void Given_Image_When_TitleAndUrlAsParame_Then_ReturnMDImageMarkup()
+    {
+        // Arrange
+        string expected =
+            "![GoogleLogo](https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png)";
+        
+        // Act
+        Image imageElement = new Image("GoogleLogo",
+            "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png");
+        string actual = imageElement.Create();
+        
+        // Assert
+        Assert.Equal(expected, actual);
+    }
 }
