@@ -33,7 +33,7 @@ public class ElementsTests
     }
 
     [Fact]
-    public void Given_Link_When_LinkAsParam_Then_ReturnMDLinkMarkup()
+    public void Given_Header_When_LevelAndHeaderAsParam_Then_ReturnMDHeaderMarkup()
     {
         // Arrange
         string expected = "## header\n";
@@ -42,7 +42,21 @@ public class ElementsTests
         Header headerElement = new Header(2, "header");
         string actual = headerElement.Create();
 
-        //Assert
+        // Assert
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void Given_Link_When_TitleAndUrlAsParam_Then_ReturnMDLinkMarkup()
+    {
+        // Arrange
+        string expected = "[Google](https://www.google.com/)";
+
+        // Act
+        Link linkElement = new Link("Google", "https://www.google.com/");
+        string actual = linkElement.Create();
+
+        // Assert
         Assert.Equal(expected, actual);
     }
 }
