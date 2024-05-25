@@ -1,3 +1,4 @@
+using System;
 using Markdown.Generator.Core.Documents;
 using Markdown.Generator.Core.Markdown;
 using Moq;
