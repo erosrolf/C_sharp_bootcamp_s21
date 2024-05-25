@@ -47,6 +47,20 @@ public class ElementsTests
     }
 
     [Fact]
+    public void Given_List_When_TextAsParam_Then_ReturnMDListMarkup()
+    {
+        // Arrange
+        string expected = "- list\n";
+        
+        // Act
+        Markdown.Elements.List listElement = new List("list");
+        string actual = listElement.Create();
+        
+        // Assert
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
     public void Given_Link_When_TitleAndUrlAsParam_Then_ReturnMDLinkMarkup()
     {
         // Arrange
