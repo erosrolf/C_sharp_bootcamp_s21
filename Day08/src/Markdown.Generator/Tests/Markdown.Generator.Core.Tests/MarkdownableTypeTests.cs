@@ -1,3 +1,4 @@
+using System.Linq;
 using Markdown.Generator.Core.Markdown;
 
 namespace Markdown.Generator.Core.Tests
