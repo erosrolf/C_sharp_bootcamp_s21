@@ -4,7 +4,7 @@ using Markdown.Generator.Core.Markdown.Elements;
 
 namespace Markdown.Generator.Core.Tests
 {
-    public class MarkdownBuilderTests_cd
+    public class MarkdownBuilderTests
     {
         [Fact]
         public void Given_MarkdownBuilder_When_CodeQuoteCalled_Then_CodeQuoteAddedToElements()
